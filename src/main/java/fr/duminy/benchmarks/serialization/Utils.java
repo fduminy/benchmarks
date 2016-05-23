@@ -33,25 +33,11 @@ package fr.duminy.benchmarks.serialization;
 
 import fr.duminy.benchmarks.serialization.objects.ObjectFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 public class Utils {
     private Utils() {
-    }
-
-    public static ByteArrayOutputStream serialize(Object object) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //TODO give a size
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(baos);
-            oos.writeObject(object);
-        } finally {
-            close(oos);
-        }
-        return baos;
     }
 
     public static void close(Closeable... closeables) {

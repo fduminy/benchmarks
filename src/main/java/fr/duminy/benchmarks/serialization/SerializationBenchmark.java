@@ -36,11 +36,6 @@ import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
-import static fr.duminy.benchmarks.serialization.Utils.close;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Warmup()
@@ -48,21 +43,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @Fork(value = 1, jvmArgsAppend = { "-server", "-Xmx512m", "-Xms512m" })
 public class SerializationBenchmark {
     @Benchmark
-    public Object baseline_deserialize(ObjectContainer container) {
-        // empty benchmark check the Level.Invocation setup fixture
-        // does not impact significantly the measures on readObject()
-        return null;
-    }
-
-    @Benchmark
-    public Object deserialize_jdk(ObjectContainer container) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream bais = container.getInputStream();
-        ObjectInputStream ois = null;
-        try {
-            ois = new ObjectInputStream(bais);
-            return ois.readObject();
-        } finally {
-            close(ois);
-        }
+    public Object deserialize(ObjectContainer container) throws Exception {
+        return container.getSerializer().deserialize(container.getInputStream());
     }
 }
