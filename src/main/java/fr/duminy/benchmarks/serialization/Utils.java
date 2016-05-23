@@ -31,42 +31,28 @@
 
 package fr.duminy.benchmarks.serialization;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Warmup;
-
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
-@Warmup()
-@Measurement(iterations = 1, time = 100, timeUnit = MILLISECONDS)
-@Fork(1)
-public class SerializationBenchmark {
-    @Benchmark
-    public Object baseline_readObject(ObjectContainer container) {
-        // empty benchmark check the Level.Invocation setup fixture
-        // does not impact significantly the measures on readObject()
-        return null;
+public class Utils {
+    private Utils() {
     }
 
-    @Benchmark
-    public Object readObject(ObjectContainer container) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream bais = container.getInputStream();
-        ObjectInputStream ois = null;
+    public static ByteArrayOutputStream serialize(Object object) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //TODO give a size
+        ObjectOutputStream oos = null;
         try {
-            ois = new ObjectInputStream(bais);
-            return ois.readObject();
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
         } finally {
-            close(ois);
+            close(oos);
         }
+        return baos;
     }
 
-    private static void close(Closeable... closeables) {
+    public static void close(Closeable... closeables) {
         for (Closeable closeable : closeables) {
             if (closeable != null) {
                 try {
@@ -76,5 +62,9 @@ public class SerializationBenchmark {
                 }
             }
         }
+    }
+
+    public static String[] values(Class<ObjectContainer.ObjectFactory> objectFactoryClass) {
+        return new String[0];
     }
 }
