@@ -37,10 +37,10 @@ import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Warmup;
 
 import java.io.ByteArrayInputStream;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import static fr.duminy.benchmarks.serialization.Utils.close;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Warmup()
@@ -48,14 +48,14 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @Fork(1)
 public class SerializationBenchmark {
     @Benchmark
-    public Object baseline_readObject(ObjectContainer container) {
+    public Object baseline_deserialize(ObjectContainer container) {
         // empty benchmark check the Level.Invocation setup fixture
         // does not impact significantly the measures on readObject()
         return null;
     }
 
     @Benchmark
-    public Object readObject(ObjectContainer container) throws IOException, ClassNotFoundException {
+    public Object deserialize_jdk(ObjectContainer container) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bais = container.getInputStream();
         ObjectInputStream ois = null;
         try {
@@ -63,18 +63,6 @@ public class SerializationBenchmark {
             return ois.readObject();
         } finally {
             close(ois);
-        }
-    }
-
-    private static void close(Closeable... closeables) {
-        for (Closeable closeable : closeables) {
-            if (closeable != null) {
-                try {
-                    closeable.close();
-                } catch (IOException e) {
-                    System.out.printf("Can't close. Reason: %s %s", e.getClass(), e.getMessage());
-                }
-            }
         }
     }
 }
