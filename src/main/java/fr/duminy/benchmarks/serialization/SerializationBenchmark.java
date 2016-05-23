@@ -31,16 +31,18 @@
 
 package fr.duminy.benchmarks.serialization;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.*;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.openjdk.jmh.annotations.Mode.AverageTime;
+import static org.openjdk.jmh.annotations.Mode.SampleTime;
 
 @Warmup()
-@Measurement(iterations = 1, time = 100, timeUnit = MILLISECONDS)
+@Measurement(iterations = 1, time = 10, timeUnit = SECONDS)
 @Fork(value = 1, jvmArgsAppend = { "-server", "-Xmx512m", "-Xms512m" })
+@BenchmarkMode({ SampleTime, AverageTime })
+@OutputTimeUnit(MILLISECONDS)
 public class SerializationBenchmark {
     @Benchmark
     public Object deserialize(ObjectContainer container) throws Exception {
