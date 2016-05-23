@@ -45,7 +45,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Warmup()
 @Measurement(iterations = 1, time = 100, timeUnit = MILLISECONDS)
-@Fork(1)
+@Fork(value = 1, jvmArgsAppend = { "-server", "-Xmx512m", "-Xms512m" })
 public class SerializationBenchmark {
     @Benchmark
     public Object baseline_deserialize(ObjectContainer container) {
