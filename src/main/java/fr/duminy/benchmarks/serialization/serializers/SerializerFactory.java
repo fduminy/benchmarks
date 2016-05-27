@@ -5,25 +5,25 @@ import java.io.ByteArrayOutputStream;
 
 public enum SerializerFactory {
     BASELINE {
-        @Override public Serializer createSerializer() {
-            return new Serializer() {
+        @Override public <T> Serializer<T> createSerializer(Class<T> clazz) {
+            return new Serializer<T>() {
                 @Override
-                public ByteArrayOutputStream serialize(Object object) throws Exception {
+                public ByteArrayOutputStream serialize(T object) throws Exception {
                     return new ByteArrayOutputStream();
                 }
 
                 @Override
-                public Object deserialize(ByteArrayInputStream inputStream) throws Exception {
+                public T deserialize(ByteArrayInputStream inputStream) throws Exception {
                     return null;
                 }
             };
         }
     },
     JDK {
-        @Override public Serializer createSerializer() {
-            return new JdkSerializer();
+        @Override public <T> Serializer<T> createSerializer(Class<T> clazz) {
+            return new JdkSerializer<T>();
         }
     };
 
-    abstract public Serializer createSerializer();
+    public abstract <T> Serializer<T> createSerializer(Class<T> clazz);
 }

@@ -7,9 +7,9 @@ import java.io.ObjectOutputStream;
 
 import static fr.duminy.benchmarks.serialization.Utils.close;
 
-public class JdkSerializer implements Serializer {
+public class JdkSerializer<T> implements Serializer<T> {
     @Override
-    public ByteArrayOutputStream serialize(Object object) throws Exception {
+    public ByteArrayOutputStream serialize(T object) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(); //TODO give a size
         ObjectOutputStream oos = null;
         try {
@@ -21,12 +21,13 @@ public class JdkSerializer implements Serializer {
         return baos;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object deserialize(ByteArrayInputStream inputStream) throws Exception {
+    public T deserialize(ByteArrayInputStream inputStream) throws Exception {
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream(inputStream);
-            return ois.readObject();
+            return (T) ois.readObject();
         } finally {
             close(ois);
         }

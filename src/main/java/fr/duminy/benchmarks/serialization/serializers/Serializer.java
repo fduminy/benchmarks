@@ -3,8 +3,8 @@ package fr.duminy.benchmarks.serialization.serializers;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-public interface Serializer {
-    ByteArrayOutputStream serialize(Object object) throws Exception;
+public interface Serializer<T> {
+    ByteArrayOutputStream serialize(T object) throws Exception;
 
-    Object deserialize(ByteArrayInputStream inputStream) throws Exception;
+    T deserialize(ByteArrayInputStream inputStream) throws Exception;
 }

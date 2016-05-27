@@ -31,8 +31,6 @@
 
 package fr.duminy.benchmarks.serialization;
 
-import fr.duminy.benchmarks.serialization.objects.ObjectFactory;
-
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -50,9 +48,5 @@ public class Utils {
                 }
             }
         }
-    }
-
-    public static String[] values(Class<ObjectFactory> objectFactoryClass) {
-        return new String[0];
     }
 }

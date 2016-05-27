@@ -25,8 +25,9 @@ public class ObjectContainer {
 
     @Setup(Level.Trial)
     public void initSerializedObject() throws Exception {
-        serializer = serializerFactory.createSerializer();
-        serializedObject = serializer.serialize(objectFactory.createObject());
+        Object object = objectFactory.createObject();
+        serializer = serializerFactory.createSerializer(object.getClass());
+        serializedObject = serializer.serialize(object);
     }
 
     @Setup(Level.Invocation)
