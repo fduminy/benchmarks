@@ -5,9 +5,6 @@ import fr.duminy.benchmarks.serialization.serializers.Serializer;
 import fr.duminy.benchmarks.serialization.serializers.SerializerFactory;
 import org.openjdk.jmh.annotations.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 @State(Scope.Benchmark)
 public class ObjectContainer {
     @Param(value = { "SMALL_OBJECT", "BIG_OBJECT" })
@@ -17,8 +14,8 @@ public class ObjectContainer {
     private SerializerFactory serializerFactory;
 
     private Serializer serializer;
-    private ByteArrayOutputStream serializedObject;
-    private ByteArrayInputStream workingCopy;
+    private byte[] serializedObject;
+    private byte[] workingCopy;
 
     public ObjectContainer() {
     }
@@ -32,10 +29,10 @@ public class ObjectContainer {
 
     @Setup(Level.Invocation)
     public void makeCopy() {
-        workingCopy = new ByteArrayInputStream(serializedObject.toByteArray());
+        workingCopy = serializedObject.clone();
     }
 
-    public ByteArrayInputStream getInputStream() {
+    public byte[] getInput() {
         return workingCopy;
     }
 

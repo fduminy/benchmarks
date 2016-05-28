@@ -6,8 +6,6 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import java.io.ByteArrayOutputStream;
-
 @RunWith(Theories.class)
 public class ObjectSizeTest {
     @Theory
@@ -16,7 +14,7 @@ public class ObjectSizeTest {
         Object object = objectFactory.createObject();
         Serializer<T> serializer = (Serializer<T>) serializerFactory.createSerializer(object.getClass());
         Class<T> objectClass = objectFactory.getObjectClass();
-        ByteArrayOutputStream baos = serializer.serialize(objectClass.cast(object));
-        System.out.printf("%s %s : %,d bytes%n", serializerFactory, objectFactory, baos.size());
+        byte[] output = serializer.serialize(objectClass.cast(object));
+        System.out.printf("%s %s : %,d bytes%n", serializerFactory, objectFactory, output.length);
     }
 }

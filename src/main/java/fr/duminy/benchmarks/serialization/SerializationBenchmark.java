@@ -46,6 +46,6 @@ import static org.openjdk.jmh.annotations.Mode.SampleTime;
 public class SerializationBenchmark {
     @Benchmark
     public Object deserialize(ObjectContainer container) throws Exception {
-        return container.getSerializer().deserialize(container.getInputStream());
+        return container.getSerializer().deserialize(container.getInput());
     }
 }

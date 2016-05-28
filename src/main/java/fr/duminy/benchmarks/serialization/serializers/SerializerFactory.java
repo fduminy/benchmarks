@@ -1,19 +1,16 @@
 package fr.duminy.benchmarks.serialization.serializers;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 public enum SerializerFactory {
     BASELINE {
         @Override public <T> Serializer<T> createSerializer(Class<T> clazz) {
             return new Serializer<T>() {
                 @Override
-                public ByteArrayOutputStream serialize(T object) throws Exception {
-                    return new ByteArrayOutputStream();
+                public byte[] serialize(T object) throws Exception {
+                    return new byte[0];
                 }
 
                 @Override
-                public T deserialize(ByteArrayInputStream inputStream) throws Exception {
+                public T deserialize(byte[] input) throws Exception {
                     return null;
                 }
             };
