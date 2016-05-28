@@ -20,6 +20,7 @@ public class ObjectContainer {
     public ObjectContainer() {
     }
 
+    @SuppressWarnings("unchecked")
     @Setup(Level.Trial)
     public void initSerializedObject() throws Exception {
         Object object = objectFactory.createObject();
