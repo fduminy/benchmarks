@@ -10,7 +10,7 @@ public class ObjectContainer {
     @Param(value = { "SMALL_OBJECT", "BIG_OBJECT" })
     private ObjectFactory objectFactory;
 
-    @Param(value = { "BASELINE", "JDK" })
+    @Param(value = { "BASELINE", "JDK", "PROTOSTUFF" })
     private SerializerFactory serializerFactory;
 
     private Serializer serializer;

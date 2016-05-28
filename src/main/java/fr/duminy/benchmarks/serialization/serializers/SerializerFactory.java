@@ -20,6 +20,11 @@ public enum SerializerFactory {
         @Override public <T> Serializer<T> createSerializer(Class<T> clazz) {
             return new JdkSerializer<T>();
         }
+    },
+    PROTOSTUFF {
+        @Override public <T> Serializer<T> createSerializer(Class<T> clazz) {
+            return new ProtostuffSerializer<T>(clazz);
+        }
     };
 
     public abstract <T> Serializer<T> createSerializer(Class<T> clazz);
