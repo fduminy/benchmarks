@@ -7,7 +7,7 @@ import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
 public class ObjectContainer {
-    @Param(value = { "SMALL_OBJECT", "BIG_OBJECT" })
+    @Param(value = { "SMALL_OBJECT", "BIG_OBJECT", "HUGE_OBJECT" })
     private ObjectFactory objectFactory;
 
     @Param(value = { "BASELINE", "JDK", "PROTOSTUFF" })

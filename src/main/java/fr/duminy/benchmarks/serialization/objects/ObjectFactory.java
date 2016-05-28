@@ -10,6 +10,11 @@ public enum ObjectFactory {
         @Override public BigClass createObject() throws InterruptedException {
             return new BigClass(10, 300000);
         }
+    },
+    HUGE_OBJECT(BigClass.class) {
+        @Override public BigClass createObject() throws InterruptedException {
+            return new BigClass(10, 3000000);
+        }
     };
 
     private final Class<?> objectClass;

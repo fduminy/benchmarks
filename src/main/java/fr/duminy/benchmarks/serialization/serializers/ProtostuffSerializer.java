@@ -15,7 +15,7 @@ public class ProtostuffSerializer<T> implements Serializer<T> {
     @Override
     public byte[] serialize(T object) throws Exception {
         Schema schema = RuntimeSchema.getSchema(object.getClass());
-        LinkedBuffer buffer = LinkedBuffer.allocate(1024 * 1024); //TODO give a size more accurately
+        LinkedBuffer buffer = LinkedBuffer.allocate(MAX_SERIALIZED_SIZE);
         try {
             return ProtostuffIOUtil.toByteArray(object, schema, buffer);
         } finally {

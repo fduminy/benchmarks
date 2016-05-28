@@ -10,7 +10,7 @@ import static fr.duminy.benchmarks.serialization.Utils.close;
 public class JdkSerializer<T> implements Serializer<T> {
     @Override
     public byte[] serialize(T object) throws Exception {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(); //TODO give a size.
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(MAX_SERIALIZED_SIZE);
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(baos);
@@ -18,7 +18,7 @@ public class JdkSerializer<T> implements Serializer<T> {
         } finally {
             close(oos);
         }
-        return baos.toByteArray(); //TODO avoid copy of byte array.
+        return baos.toByteArray();
     }
 
     @SuppressWarnings("unchecked")

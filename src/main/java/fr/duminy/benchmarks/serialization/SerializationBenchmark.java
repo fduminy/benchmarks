@@ -40,7 +40,7 @@ import static org.openjdk.jmh.annotations.Mode.SampleTime;
 
 @Warmup()
 @Measurement(iterations = 1, time = 10, timeUnit = SECONDS)
-@Fork(value = 1, jvmArgsAppend = { "-server", "-Xmx512m", "-Xms512m" })
+@Fork(value = 1, jvmArgsAppend = { "-server", "-Xmx5g", "-Xms5g" })
 @BenchmarkMode({ SampleTime, AverageTime })
 @OutputTimeUnit(MILLISECONDS)
 public class SerializationBenchmark {
